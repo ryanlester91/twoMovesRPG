@@ -5,6 +5,9 @@ let savedCompMove;
 let yourHealthPoints = 100;
 let compHealthPoints = 100;
 
+//Turn counter
+let totalRounds = 0;
+
 //Doc rewrites
 let res;
 let playByPlay = document.getElementById('announcements');
@@ -15,6 +18,11 @@ let counterButton = document.getElementById('counterBtn');
 let resetButton = document.getElementById('resetBtn');
 let playAgain = document.getElementById('playByPlay');
 
+function enableButtons() {
+    attackButton.disabled = false;
+    counterButton.disabled = false;
+}
+
 
 //Triggers the fight
 let fight = (id) => {
@@ -23,8 +31,20 @@ let fight = (id) => {
     gameOver();
 }
 
-let 
+let addRound = () => {
+    totalRounds += 1;
+} 
 
+
+let healthChange = () => {
+    yourHealthBar.style.width = yourHealth + "%";
+    compHealthBar.style.width = compHealth + "%";
+}
+
+
+
+
+window.onload=enableButtons();
 
 
 
