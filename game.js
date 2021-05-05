@@ -31,21 +31,15 @@ function enableButtons() {
 //Triggers the fight
 let fight = (id) => {
     addRound();
-    compMove(id);
+    comMove(id);
     gameOver();
 }
 
 let addRound = () => {
     totalRounds += 1;
-} 
-
-
-let healthChange = () => {
-    yourHealthBar.style.width = yourHealth + "%";
-    compHealthBar.style.width = compHealth + "%";
 }
 
-function counter(your, comp) {
+function counter(your, com) {
     let move = Math.floor((Math.random()*5));
     if (move >= 3 && your === 'attack') {
         res = 'Computer counters your attack! You lose 10 HP'
@@ -64,8 +58,30 @@ function counter(your, comp) {
         yourHealthPoints -= 15
     }
 }
+// Dislpays results of the round
+function roundResults(res) {
+	playByPlay.innerHTML += res + "<br>";
+}
 
-let compMove = (id) => {
+let healthChange = () => {
+    yourHealthBar.style.width = yourHealth + "%";
+    compHealthBar.style.width = compHealth + "%";
+}
+function gameOver() {
+	if (yourHealth === 0 || compHealth === 0) {
+		res = 'gameOver!';
+		roundResults(res);
+		attackButton.disabled = true;
+		counterButton.disabled = true;
+		playAgain.disabled = true;
+	}
+
+
+}
+
+
+
+let comMove = (id) => {
     let move = Math.floor((Math.random()*4)+1);
     if (move <= 3) {
         savedCompMove = 'attack';
@@ -73,6 +89,29 @@ let compMove = (id) => {
         savedCompMove = 'counter';
     }
     res = "Your move is <span>" + id + "</span> and the computer move is <span>" + id + '</span>.'
+    damageStep(id, savedCompMove);
+	roundResults(res);
+}
+
+function damageStep(your, com) {
+	if (your === 'attack' && com === 'attack') {
+		res = 'Both players took damage';
+		if (compHealth >= 10 && yourHealth >= 10) {
+			compHealth -= 10;
+			yourHealth -= 10;
+		} else {
+			compHealth = 0;
+			yourHealth = 0;
+		}
+	} else if ( your === 'counter' && com === 'counter') {
+		res = 'Defensive stances taken in vain';
+	} else if ( your === 'attack' && com === 'counter') {
+		res = 'Comp switches to the defensive and prepares to counter';
+		counter(your, com);
+	} else if ( your === 'counter' && com === 'attack') {
+		res = 'You switch to the defensive and prepare to counter';
+		counter(your, com);
+	}
 }
 
 /*$(document).ready(function () {

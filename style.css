@@ -1,4 +1,8 @@
-
+body {
+    width: 960px;
+	background: lightgray;
+	margin: 50px auto;
+}
 .container {
     display: flex;
     flex-wrap: wrap;
@@ -28,4 +32,12 @@ button {
     height: 100%;
     width: 100%;
     background: lightgreen;
+}
+
+#announcements {
+	border: black 2px solid
+}
+
+#announcements span {
+	color: darkblue;
 }
